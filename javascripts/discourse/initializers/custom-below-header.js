@@ -24,7 +24,7 @@ export default {
           }
 
           console.log({
-            settings: settings,
+            settings: this.siteSettings,
             component: component,
             shouldDisplay: shouldDisplay,
             currentPath: currentPath,
