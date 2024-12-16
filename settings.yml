@@ -1,7 +1,7 @@
 display_on_routes:
-  default: /|/t|/c|/latest
+  default: "/|/t|/c|/latest*"
   type: list
-  description: "List of route prefixes where the component should appear (e.g., /, /t, /c)."
+  description: "List of route prefixes where the component should appear (e.g., /, /t, /c). Use * for prefix matching."
 custom_link_text:
   default: "Studio Hours: how to speed up site planning"
   description: "Text to display in the link."

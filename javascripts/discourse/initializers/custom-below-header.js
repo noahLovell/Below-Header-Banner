@@ -7,7 +7,10 @@ export default {
       const settings = Discourse.SiteSettings; // Access theme settings
 
       api.onPageChange(() => {
-        const allowedRoutes = settings.display_on_routes.split("|"); // Get the routes from the setting
+        const allowedRoutes = settings.display_on_routes
+          ? settings.display_on_routes.split("|")
+          : []; // Fallback to an empty array if undefined
+        
         const currentPath = window.location.pathname; // Current route path
         
         const shouldDisplay = allowedRoutes.some((route) => {
