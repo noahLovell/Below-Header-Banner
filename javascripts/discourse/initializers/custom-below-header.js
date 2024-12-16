@@ -8,9 +8,7 @@ export default {
 
       api.onPageChange(() => {
         try {
-          const allowedRoutes = typeof settings.display_on_routes === "string"
-            ? settings.display_on_routes.split("|")
-            : [];
+          const allowedRoutes = settings.display_on_routes.split("|")
           const currentPath = window.location.pathname;
 
           const shouldDisplay = allowedRoutes.some((route) => {
@@ -26,6 +24,7 @@ export default {
           }
 
           console.log({
+            settings: settings,
             component: component,
             shouldDisplay: shouldDisplay,
             currentPath: currentPath,
