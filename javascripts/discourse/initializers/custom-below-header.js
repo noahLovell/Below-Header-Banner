@@ -20,12 +20,17 @@ export default {
             return currentPath === route;
           });
 
-          console.log("shouldDisplay", shouldDisplay);
-
           const component = document.querySelector(".custom-below-header");
           if (component) {
             component.style.display = shouldDisplay ? "" : "none";
           }
+
+          console.log({
+            component: component,
+            shouldDisplay: shouldDisplay,
+            currentPath: currentPath,
+            allowedRoutes: allowedRoutes,
+          })
         } catch (error) {
           console.error("Error in custom-below-header:", error);
         }
