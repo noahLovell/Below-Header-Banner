@@ -4,28 +4,28 @@ export default {
   name: "custom-below-header",
   initialize() {
     withPluginApi("0.8", (api) => {
-      const settings = Discourse.SiteSettings; // Access theme settings
+      const settings = Discourse.SiteSettings;
 
       api.onPageChange(() => {
-        const allowedRoutes = settings.display_on_routes
-          ? settings.display_on_routes.split("|")
-          : []; // Fallback to an empty array if undefined
-        
-        const currentPath = window.location.pathname; // Current route path
-        
-        const shouldDisplay = allowedRoutes.some((route) => {
-          if (route.endsWith("*")) {
-            // Match prefix with wildcard
-            return currentPath.startsWith(route.slice(0, -1));
-          }
-          // Match exact path
-          return currentPath === route;
-        });
+        try {
+          const allowedRoutes = typeof settings.display_on_routes === "string"
+            ? settings.display_on_routes.split("|")
+            : [];
+          const currentPath = window.location.pathname;
 
-        // Show or hide the component based on route match
-        const component = document.querySelector(".custom-below-header");
-        if (component) {
-          component.style.display = shouldDisplay ? "" : "none";
+          const shouldDisplay = allowedRoutes.some((route) => {
+            if (route.endsWith("*")) {
+              return currentPath.startsWith(route.slice(0, -1));
+            }
+            return currentPath === route;
+          });
+
+          const component = document.querySelector(".custom-below-header");
+          if (component) {
+            component.style.display = shouldDisplay ? "" : "none";
+          }
+        } catch (error) {
+          console.error("Error in custom-below-header:", error);
         }
       });
     });
