@@ -4,8 +4,13 @@ registerHelper("route-prefix-match", function (routes, currentPath) {
   if (!routes || !currentPath) {
     return false;
   }
-  // Convert the routes into a usable array if it's a string
-  const routeList = Array.isArray(routes) ? routes : routes.split(",");
-  // Check if the current path starts with any of the prefixes
-  return routeList.some((route) => currentPath.startsWith(route));
+
+  // Ensure routes is split into an array
+  const routeList = routes.split("|").map(route => route.trim());
+
+  // Normalize currentPath to remove query params or fragments
+  const normalizedPath = currentPath.split("?")[0].split("#")[0];
+
+  // Check if currentPath starts with any of the route prefixes
+  return routeList.some(route => normalizedPath.startsWith(route));
 });
