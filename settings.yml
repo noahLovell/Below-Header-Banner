@@ -1,2 +1,8 @@
-example_setting:
-  default: true
+custom_link_text:
+  default: "Studio Hours: how to speed up site planning"
+  type: text
+  description: "Text to display in the link."
+custom_link_url:
+  default: "https://www.wix.com/studio/academy/event-details/studio-hours-how-to-speed-up-site-planning/form"
+  type: url
+  description: "URL to use for the link."

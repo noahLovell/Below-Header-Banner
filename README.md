@@ -1,5 +1,9 @@
-# **Theme Name**
+# Custom Below Header Component
+A Discourse Theme Component to add a customizable banner below the site header.
 
-**Theme Summary**
+## Settings
+- **Custom Link Text**: Text displayed in the banner link.
+- **Custom Link URL**: URL that the banner link redirects to.
 
-For more information, please see: **url to meta topic**
+## Installation
+Add this component to your Discourse instance via the theme admin panel.
