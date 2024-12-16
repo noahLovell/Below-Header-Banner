@@ -20,6 +20,8 @@ export default {
             return currentPath === route;
           });
 
+          console.log("shouldDisplay", shouldDisplay);
+
           const component = document.querySelector(".custom-below-header");
           if (component) {
             component.style.display = shouldDisplay ? "" : "none";
