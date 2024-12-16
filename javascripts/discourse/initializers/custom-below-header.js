@@ -2,16 +2,16 @@ import { withPluginApi } from "discourse/lib/plugin-api";
 
 export default {
   name: "custom-below-header",
-  initialize() {
+  initialize(container) {
     withPluginApi("0.8", (api) => {
-      const settings = Discourse.SiteSettings;
+      this.siteSettings = container.lookup("service:site-settings");
 
       api.onPageChange(() => {
         try {
-          const allowedRoutes = settings.display_on_routes.split("|")
+          const allowedRoutes = settings.display_on_routes
           const currentPath = window.location.pathname;
 
-          const shouldDisplay = allowedRoutes.some((route) => {
+          const shouldDisplay = allowedRoutes.split("|").some((route) => {
             if (route.endsWith("*")) {
               return currentPath.startsWith(route.slice(0, -1));
             }
