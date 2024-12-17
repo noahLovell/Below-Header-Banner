@@ -21,7 +21,7 @@ export default {
 
             const component = document.querySelector(".custom-below-header");
             if (component) {
-              component.style.display = shouldDisplay ? "" : "none";
+              component.style.display = shouldDisplay ? "flex" : "none";
             }
 
             console.log({
