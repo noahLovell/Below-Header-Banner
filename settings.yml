@@ -1,7 +1,7 @@
 enable_banner:
   default: false
   type: bool
-  description: "To disable the banner, set this to false."
+  description: "Check to enable the banner."
 display_on_routes:
   default: "/|/t|/c|/latest*"
   type: list

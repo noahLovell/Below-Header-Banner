@@ -31,6 +31,11 @@ export default {
               currentPath: currentPath,
               allowedRoutes: allowedRoutes,
             })
+          } else {
+            const component = document.querySelector(".custom-below-header");
+            if (component) {
+              component.style.display = "none";
+            }
           }
         } catch (error) {
           console.error("Error in custom-below-header:", error);
