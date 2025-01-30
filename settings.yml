@@ -2,7 +2,7 @@ enable_banner:
   default: false
   type: bool
   description: "Check to enable the banner."
-  api_endpoint:
+api_endpoint:
   default: "https://api.example.com/endpoint"
   client: true
 api_key:
@@ -14,10 +14,10 @@ category_id:
   description: "Category ID for topic creation for error reporting"
   client: true
 placement_id:
-  default: "below-header-banner",
+  default: "below-header-banner"
   client: true
 campaign_id:
-  default: "",
+  default: ""
   client: true
   description: "Campaign ID for tracking"
 display_on_routes:
