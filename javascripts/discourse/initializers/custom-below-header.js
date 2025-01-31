@@ -92,6 +92,7 @@ function handleBannerClick(block, event) {
     .then((response) => {
       console.log("Block data sent successfully:", response);
       navigateToLink(event);
+      return;
     })
     .catch((error) => {
       handleErrorAndStop({
