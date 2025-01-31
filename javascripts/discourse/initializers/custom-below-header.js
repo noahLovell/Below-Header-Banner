@@ -47,6 +47,13 @@ function addEventHandler(component) {
 
       if (!placementID || !campaignID) {
         console.warn("Missing placementID or campaignID on banner click.");
+        handleErrorAndStop({
+          origin: window.location.origin,
+          placementID: block.placementID,
+          campaignID: block.campaignID,
+          message: "API endpoint is not configured.",
+          event,
+        });
         return;
       }
 
@@ -66,7 +73,6 @@ function handleBannerClick(block, event) {
       message: "API endpoint is not configured.",
       event,
     });
-    return;
     return;
   }
 
