@@ -2,6 +2,24 @@ enable_banner:
   default: false
   type: bool
   description: "Check to enable the banner."
+api_endpoint:
+  default: "https://api.example.com/endpoint"
+  client: true
+api_key:
+  default: ""
+  client: true
+  description: "Discourse API key for error reporting via topic creation"
+category_id:
+  default: 0
+  description: "Category ID for topic creation for error reporting"
+  client: true
+placement_id:
+  default: "below-header-banner"
+  client: true
+campaign_id:
+  default: ""
+  client: true
+  description: "Campaign ID for tracking"
 display_on_routes:
   default: "/|/t|/c|/latest*"
   type: list
