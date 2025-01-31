@@ -64,7 +64,7 @@ function addEventHandler(component) {
 
 function handleBannerClick(block, event) {
   const apiEndpoint = settings.api_endpoint;
-
+  console.log("API Endpoint:", settings.api_endpoint);
   if (!apiEndpoint) {
     handleErrorAndStop({
       origin: window.location.origin,
@@ -107,7 +107,7 @@ function handleBannerClick(block, event) {
 function navigateToLink(event) {
   const href = event.target.closest("a")?.getAttribute("href");
   if (href) {
-    window.location.href = href;
+    window.open(href, "_blank");
   }
 }
 
