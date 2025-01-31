@@ -59,7 +59,14 @@ function handleBannerClick(block, event) {
   const apiEndpoint = settings.api_endpoint;
 
   if (!apiEndpoint) {
-    console.warn("API endpoint is not configured.");
+    handleErrorAndStop({
+      origin: window.location.origin,
+      placementID: block.placementID,
+      campaignID: block.campaignID,
+      message: "API endpoint is not configured.",
+      event,
+    });
+    return;
     return;
   }
 
@@ -78,9 +85,60 @@ function handleBannerClick(block, event) {
   })
     .then((response) => {
       console.log("Block data sent successfully:", response);
-      window.location.href = event.target.href;
+      navigateToLink(event);
     })
     .catch((error) => {
-      console.error("Error sending block data:", error);
+      handleErrorAndStop({
+        origin: window.location.origin,
+        placementID: block.placementID,
+        campaignID: block.campaignID,
+        message: error.responseText || error.message || "Unknown error",
+        event,
+      });
     });
+}
+
+function navigateToLink(event) {
+  const href = event.target.closest("a")?.getAttribute("href");
+  if (href) {
+    window.location.href = href;
+  }
+}
+
+function handleErrorAndStop({ origin, placementID, campaignID, message, event }) {
+  console.error("Error encountered:", message);
+
+  const apiKey = settings.api_key;
+  const errorCategoryID = settings.error_category_id;
+
+  if (!apiKey || !errorCategoryID) {
+    console.warn("Missing required settings for error topic creation.");
+    navigateToLink(event); 
+    return;
+  }
+
+  const topicTitle = `API Error: Below Header Failure`;
+  const topicBody = `
+  **Error Details:**
+  - **Origin:** ${origin}
+  - **Placement ID:** ${placementID} 
+  - **Campaign ID:** ${campaignID}
+  - **Error Message:** ${message}`;
+
+  ajax("/posts", {
+    method: "POST",
+    data: {
+      title: topicTitle,
+      raw: topicBody,
+      category: errorCategoryID,
+      api_key: apiKey,
+      api_username: "system",
+    },
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(() => console.log("Error topic created successfully."))
+    .catch((err) => console.error("Failed to create error topic:", err))
+    .finally(() => navigateToLink(event)); 
 }
