@@ -115,7 +115,7 @@ function handleErrorAndStop({ origin, placementID, campaignID, message, event })
   console.error("Error encountered:", message);
 
   const apiKey = settings.api_key;
-  const errorCategoryID = settings.error_category_id;
+  const errorCategoryID = settings.category_id;
 
   if (!apiKey || !errorCategoryID) {
     console.warn("Missing required settings for error topic creation.");
