@@ -136,7 +136,7 @@ function handleErrorAndStop({ origin, placementID, campaignID, message, event })
     data: {
       title: topicTitle,
       raw: topicBody,
-      category: categoryID,
+      category: errorCategoryID,
     },
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
