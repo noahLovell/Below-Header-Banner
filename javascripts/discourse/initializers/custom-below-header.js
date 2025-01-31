@@ -136,12 +136,12 @@ function handleErrorAndStop({ origin, placementID, campaignID, message, event })
     data: {
       title: topicTitle,
       raw: topicBody,
-      category: errorCategoryID,
-      api_key: apiKey,
-      api_username: "system",
+      category: categoryID,
     },
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Api-Key": apiKey,
+      "Api-Username": "system",
     },
   })
     .then(() => console.log("Error topic created successfully."))
