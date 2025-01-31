@@ -51,7 +51,7 @@ function addEventHandler(component) {
           origin: window.location.origin,
           placementID: placementID,
           campaignID: campaignID,
-          message: "API endpoint is not configured.",
+          message: "Missing placementID or campaignID",
           event,
         });
         return;
@@ -64,7 +64,7 @@ function addEventHandler(component) {
 
 function handleBannerClick(block, event) {
   const apiEndpoint = settings.api_endpoint;
-  console.log("API Endpoint:", settings.api_endpoint);
+  
   if (!apiEndpoint) {
     handleErrorAndStop({
       origin: window.location.origin,
