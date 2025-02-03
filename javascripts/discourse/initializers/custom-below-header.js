@@ -47,6 +47,13 @@ function addEventHandler(component) {
 
       if (!placementID || !campaignID) {
         console.warn("Missing placementID or campaignID on banner click.");
+        handleErrorAndStop({
+          origin: window.location.origin,
+          placementID: placementID,
+          campaignID: campaignID,
+          message: "Missing placementID or campaignID",
+          event,
+        });
         return;
       }
 
@@ -57,9 +64,15 @@ function addEventHandler(component) {
 
 function handleBannerClick(block, event) {
   const apiEndpoint = settings.api_endpoint;
-
+  
   if (!apiEndpoint) {
-    console.warn("API endpoint is not configured.");
+    handleErrorAndStop({
+      origin: window.location.origin,
+      placementID: block.placementID,
+      campaignID: block.campaignID,
+      message: "API endpoint is not configured.",
+      event,
+    });
     return;
   }
 
@@ -78,9 +91,61 @@ function handleBannerClick(block, event) {
   })
     .then((response) => {
       console.log("Block data sent successfully:", response);
-      window.location.href = event.target.href;
+      navigateToLink(event);
+      return;
     })
     .catch((error) => {
-      console.error("Error sending block data:", error);
+      handleErrorAndStop({
+        origin: window.location.origin,
+        placementID: block.placementID,
+        campaignID: block.campaignID,
+        message: error.responseText || error.message || "Unknown error",
+        event,
+      });
     });
+}
+
+function navigateToLink(event) {
+  const href = event.target.closest("a")?.getAttribute("href");
+  if (href) {
+    window.open(href, "_blank");
+  }
+}
+
+function handleErrorAndStop({ origin, placementID, campaignID, message, event }) {
+  console.error("Error encountered:", message);
+
+  const apiKey = settings.api_key;
+  const errorCategoryID = settings.category_id;
+
+  if (!apiKey || !errorCategoryID) {
+    console.warn("Missing required settings for error topic creation.");
+    navigateToLink(event); 
+    return;
+  }
+
+  const topicTitle = `API Error: Below Header Failure`;
+  const topicBody = `
+  **Error Details:**
+  - **Origin:** ${origin}
+  - **Placement ID:** ${placementID} 
+  - **Campaign ID:** ${campaignID}
+  - **Error Message:** ${message}`;
+
+  ajax("/posts", {
+    method: "POST",
+    data: {
+      title: topicTitle,
+      raw: topicBody,
+      category: errorCategoryID,
+    },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Api-Key": apiKey,
+      "Api-Username": "system",
+    },
+  })
+    .then(() => console.log("Error topic created successfully."))
+    .catch((err) => console.error("Failed to create error topic:", err))
+    .finally(() => navigateToLink(event)); 
 }
